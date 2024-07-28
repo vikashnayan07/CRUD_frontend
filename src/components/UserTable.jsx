@@ -1,55 +1,35 @@
 import React from "react";
-import { FaEdit } from "react-icons/fa";
-import { RiDeleteBin7Fill } from "react-icons/ri";
-import { v4 as uuidv4 } from "uuid";
 
-function UserTable({ users, setEditingUser, deleteUser }) {
-  if (!Array.isArray(users)) {
-    console.error("Users is not an array:", users);
-    return null;
-  }
-
+const UserTable = ({ users, setEditingUser, deleteUser }) => {
   return (
-    <table className="min-w-full divide-y divide-gray-200">
-      <thead className="bg-gray-50">
+    <table className="table-auto w-full border-collapse">
+      <thead>
         <tr>
-          <th className="px-6 py-3 text-center text-xl font-medium text-gray-500 uppercase tracking-wider">
-            Name
-          </th>
-          <th className="px-6 py-3 text-center text-xl font-medium text-gray-500 uppercase tracking-wider">
-            Job
-          </th>
-          <th className="px-6 py-3 text-center text-xl font-medium text-gray-500 uppercase tracking-wider">
-            Email
-          </th>
-          <th className="px-6 py-3 text-center text-xl font-medium text-gray-500 uppercase tracking-wider">
-            Phone
-          </th>
-          <th className="px-6 py-3 text-center text-xl font-medium text-gray-500 uppercase tracking-wider">
-            Actions
-          </th>
+          <th className="border px-4 py-2">Name</th>
+          <th className="border px-4 py-2">Job</th>
+          <th className="border px-4 py-2">Email</th>
+          <th className="border px-4 py-2">Phone</th>
+          <th className="border px-4 py-2">Actions</th>
         </tr>
       </thead>
-      <tbody className="bg-white divide-y divide-gray-200">
+      <tbody>
         {users.map((user) => (
-          <tr key={user._id || uuidv4()}>
-            <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
-            <td className="px-6 py-4 whitespace-nowrap">{user.job}</td>
-            <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
-            <td className="px-6 py-4 whitespace-nowrap">{user.phone}</td>
-            <td className="px-6 py-4 whitespace-nowrap">
+          <tr key={user._id}>
+            <td className="border px-4 py-2">{user.name}</td>
+            <td className="border px-4 py-2">{user.job}</td>
+            <td className="border px-4 py-2">{user.email}</td>
+            <td className="border px-4 py-2">{user.phone}</td>
+            <td className="border px-4 py-2 text-center g-4">
               <button
                 onClick={() => setEditingUser(user)}
-                className="text-indigo-600 hover:text-indigo-900"
+                className="mr-2 bg-blue-500 text-white px-3 py-1 rounded"
               >
-                <FaEdit />
                 Edit
               </button>
               <button
                 onClick={() => deleteUser(user._id)}
-                className="text-red-600 hover:text-red-900 ml-2"
+                className="bg-red-500 text-white px-3 py-1 rounded"
               >
-                <RiDeleteBin7Fill />
                 Delete
               </button>
             </td>
@@ -58,6 +38,6 @@ function UserTable({ users, setEditingUser, deleteUser }) {
       </tbody>
     </table>
   );
-}
+};
 
 export default UserTable;
