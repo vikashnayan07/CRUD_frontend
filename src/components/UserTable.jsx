@@ -13,13 +13,16 @@ const UserTable = ({ users, setEditingUser, deleteUser }) => {
         </tr>
       </thead>
       <tbody>
-        {users.map((user) => (
-          <tr key={user._id}>
+        {users.map((user, index) => (
+          <tr
+            key={user._id}
+            className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
+          >
             <td className="border px-4 py-2">{user.name}</td>
             <td className="border px-4 py-2">{user.job}</td>
             <td className="border px-4 py-2">{user.email}</td>
             <td className="border px-4 py-2">{user.phone}</td>
-            <td className="border px-4 py-2 text-center g-4">
+            <td className="border px-4 py-2 text-center">
               <button
                 onClick={() => setEditingUser(user)}
                 className="mr-2 bg-blue-500 text-white px-3 py-1 rounded"
