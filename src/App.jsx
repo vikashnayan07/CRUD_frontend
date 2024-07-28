@@ -14,7 +14,7 @@ function App() {
   const fetchUsers = async () => {
     try {
       const response = await axios.get(
-        "https://crud-backend-x1ji.onrender.com/api"
+        "https://crud-backend-x1ji.onrender.com/api/user"
       );
       console.log("Fetched users:", response.data);
       if (response.data.status === "Success") {
