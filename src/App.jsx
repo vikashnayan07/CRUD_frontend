@@ -13,7 +13,9 @@ function App() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/user");
+      const response = await axios.get(
+        "https://crud-backend-x1ji.onrender.com/api"
+      );
       console.log("Fetched users:", response.data);
       if (response.data.status === "Success") {
         setUsers(Array.isArray(response.data.users) ? response.data.users : []);
@@ -29,7 +31,7 @@ function App() {
   const addUser = async (user) => {
     try {
       // Make API request to add user
-      await axios.post("http://localhost:4000/api/register", user);
+      await axios.post("https://crud-backend-x1ji.onrender.com/api", user);
 
       // Fetch updated user list after adding a new user
       fetchUsers();
@@ -41,7 +43,7 @@ function App() {
   const updateUser = async (id, updatedUser) => {
     try {
       const response = await axios.put(
-        `http://localhost:4000/api/update/${id}`,
+        `https://crud-backend-x1ji.onrender.com/api/${id}`,
         updatedUser
       );
       setUsers(
@@ -54,7 +56,7 @@ function App() {
 
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/delete/${id}`);
+      await axios.delete(`https://crud-backend-x1ji.onrender.com/api/${id}`);
       setUsers(users.filter((user) => user._id !== id));
     } catch (error) {
       console.error("Error deleting user:", error);
