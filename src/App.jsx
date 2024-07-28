@@ -16,7 +16,7 @@ function App() {
       const response = await axios.get(
         "https://crud-backend-x1ji.onrender.com/api/user"
       );
-      console.log("Fetched users:", response.data);
+      console.log("Fetched users:", response.data); // Ensure this shows the expected data
       if (response.data.status === "Success") {
         setUsers(Array.isArray(response.data.users) ? response.data.users : []);
       } else {
