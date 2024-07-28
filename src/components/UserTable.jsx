@@ -1,8 +1,14 @@
 import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin7Fill } from "react-icons/ri";
+import { v4 as uuidv4 } from "uuid";
 
 function UserTable({ users, setEditingUser, deleteUser }) {
+  if (!Array.isArray(users)) {
+    console.error("Users is not an array:", users);
+    return null;
+  }
+
   return (
     <table className="min-w-full divide-y divide-gray-200">
       <thead className="bg-gray-50">
@@ -26,8 +32,8 @@ function UserTable({ users, setEditingUser, deleteUser }) {
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
         {users.map((user) => (
-          <tr key={user._id}>
-            <td className="px-6 py-4 whitespace-nowrap">{user.name} </td>
+          <tr key={user._id || uuidv4()}>
+            <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
             <td className="px-6 py-4 whitespace-nowrap">{user.job}</td>
             <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
             <td className="px-6 py-4 whitespace-nowrap">{user.phone}</td>

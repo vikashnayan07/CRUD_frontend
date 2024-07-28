@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import UserTable from "./components/UserTable";
 import AddUserForm from "./components/AddUserForm";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -15,10 +17,14 @@ function App() {
     try {
       const response = await axios.get("http://localhost:4000/api/user");
       console.log("Fetched users:", response.data);
-      setUsers(Array.isArray(response.data) ? response.data : []);
+      if (response.data.status === "Success") {
+        setUsers(Array.isArray(response.data.users) ? response.data.users : []);
+      } else {
+        setUsers([]);
+      }
     } catch (error) {
       console.error("Error fetching users:", error);
-      setUsers([]); // Ensure users is an array even if there's an error
+      setUsers([]);
     }
   };
 
@@ -28,9 +34,21 @@ function App() {
         "http://localhost:4000/api/register",
         user
       );
-      setUsers([...users, response.data]);
+      console.log("Add user response:", response.data);
+      if (response.data.status === "Success" && response.data.user) {
+        setUsers([...users, response.data.user]);
+      } else if (response.data.status === "Failed") {
+        toast.error(response.data.msg);
+      } else {
+        console.error("Unexpected response structure:", response.data);
+      }
     } catch (error) {
       console.error("Error adding user:", error);
+      if (error.response && error.response.data && error.response.data.msg) {
+        toast.error(error.response.data.msg);
+      } else {
+        toast.error("An error occurred while adding the user.");
+      }
     }
   };
 
@@ -57,6 +75,7 @@ function App() {
 
   return (
     <div className="container mx-auto p-4">
+      <ToastContainer />
       <AddUserForm
         addUser={addUser}
         editingUser={editingUser}
